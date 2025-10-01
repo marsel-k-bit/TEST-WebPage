@@ -1,148 +1,112 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valorant | Тактический шутер от Riot Games</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>OnePiece League — Вход</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background-color: #0f1923;
-      color: #ffffff;
+      padding: 0;
+      height: 100%;
+      font-family: 'Treasure Map Deadhand', Arial, sans-serif;
+      color: #fff;
+      background: url("https://i.ibb.co/YZqR7wx/onepiece-bg.jpg") no-repeat center center fixed;
+      background-size: cover;
     }
-
-    header {
-      background-color: #ff4655;
-      padding: 20px;
-      text-align: center;
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
     }
-
-    header h1 {
-      font-family: 'Orbitron', sans-serif;
-      margin: 0;
-      font-size: 2.5rem;
-    }
-
-    nav {
-      background-color: #1c1c1c;
-      padding: 10px;
-      text-align: center;
-    }
-
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      color: #ff4655;
-    }
-
-    section {
-      padding: 40px 20px;
-      max-width: 1000px;
+    .login-container {
+      position: relative;
+      width: 350px;
       margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 25px;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
     }
-
-    section h2 {
-      color: #ff4655;
+    .login-container h1 {
+      text-align: center;
       margin-bottom: 20px;
+      font-size: 2em;
+      letter-spacing: 1px;
     }
-
-    .agents-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
+    .login-container img {
+      display: block;
+      margin: 0 auto 15px;
+      width: 120px;
     }
-
-    .agent {
-      background-color: #1f2a36;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .agent img {
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
       width: 100%;
-      border-radius: 5px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 400px;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      font-size: 1em;
     }
-
-    footer {
-      background-color: #1c1c1c;
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #e67e22;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .login-container button:hover {
+      background: #d35400;
+    }
+    .links {
       text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #aaaaaa;
+      margin-top: 15px;
     }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.8rem;
-      }
+    .links a {
+      color: #bbb;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 0.9em;
+    }
+    .links a:hover {
+      color: #fff;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>VALORANT</h1>
-    <p>Тактический шутер нового поколения от Riot Games</p>
-  </header>
-
-  <nav>
-    <a href="#about">О игре</a>
-    <a href="#agents">Агенты</a>
-    <a href="#news">Новости</a>
-    <a href="#video">Трейлер</a>
-  </nav>
-
-  <section id="about">
-    <h2>О игре</h2>
-    <p><strong>Valorant</strong> — это бесплатный тактический шутер 5 на 5 от Riot Games. Здесь сочетаются точная стрельба, командная игра и уникальные способности агентов. Выбери своего героя, сформируй команду и побеждай!</p>
-  </section>
-
-  <section id="agents">
-    <h2>Популярные агенты</h2>
-    <div class="agents-grid">
-      <div class="agent">
-        <img src="https://static.wikia.nocookie.net/valorant/images/0/04/Jett_icon.png" alt="Jett">
-        <h3>Jett</h3>
-      </div>
-      <div class="agent">
-        <img src="https://static.wikia.nocookie.net/valorant/images/1/19/Phoenix_icon.png" alt="Phoenix">
-        <h3>Phoenix</h3>
-      </div>
-      <div class="agent">
-        <img src="https://static.wikia.nocookie.net/valorant/images/7/7f/Sage_icon.png" alt="Sage">
-        <h3>Sage</h3>
-      </div>
+  <div class="overlay"></div>
+  <div class="login-container">
+    <!-- Логотип One Piece -->
+    <img src="https://i.ibb.co/SKqQh2j/onepiece-logo.png" alt="One Piece Logo">
+    <h1>OnePiece League</h1>
+    <input type="text" placeholder="Имя пользователя" id="username">
+    <input type="password" placeholder="Пароль" id="password">
+    <button id="login-btn">Войти</button>
+    <div class="links">
+      <a href="#">Регистрация</a> | <a href="#">Забыли пароль?</a>
     </div>
-  </section>
+  </div>
 
-  <section id="news">
-    <h2>Последние новости</h2>
-    <p>⚡ Обновление 8.09: новый агент и изменения баланса.<br>🔥 Турнир Valorant Champions скоро стартует!</p>
-  </section>
-
-  <section id="video">
-    <h2>Официальный трейлер</h2>
-    <iframe src="https://www.youtube.com/embed/e_E9W2vsRbQ" allowfullscreen></iframe>
-  </section>
-
-  <footer>
-    <p>© 2025 Valorant by Riot Games | Сделано фанатами для фанатов</p>
-  </footer>
-
+  <script>
+    document.getElementById('login-btn').addEventListener('click', function(){
+      const user = document.getElementById('username').value;
+      const pwd = document.getElementById('password').value;
+      if(!user || !pwd) {
+        alert('Пожалуйста, заполните все поля');
+      } else {
+        // Здесь будет логика входа
+        alert('Добро пожаловать, ' + user + '!');
+      }
+    });
+  </script>
 </body>
 </html>
