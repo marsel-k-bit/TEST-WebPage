@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Treasure Map Deadhand', Arial, sans-serif;
+      font-family: Arial, sans-serif;
       color: #fff;
       background: no-repeat center center fixed;
       background-size: cover;
@@ -85,7 +85,7 @@
 <body>
   <div class="overlay"></div>
   <div class="login-container">
-    <img src="https://i.ibb.co/SKqQh2j/onepiece-logo.png" alt="One Piece Logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/One_Piece_Logo.png" alt="One Piece Logo">
     <h1>OnePiece League</h1>
     <input type="text" placeholder="Имя пользователя" id="username">
     <input type="password" placeholder="Пароль" id="password">
@@ -96,13 +96,13 @@
   </div>
 
   <script>
-    // Набор фонов по One Piece
+    // Рабочие арты из открытых источников
     const backgrounds = [
-      "https://i.ibb.co/YZqR7wx/onepiece-bg.jpg", // Луффи на закате
-      "https://i.ibb.co/4JR1rXv/onepiece-crew.jpg", // Команда Мугивар
-      "https://i.ibb.co/xYnW0cJ/onepiece-ocean.jpg", // Море и корабль
-      "https://i.ibb.co/ZMJd9sh/onepiece-battle.jpg", // Битва
-      "https://i.ibb.co/MRtvN22/onepiece-map.jpg"    // Карта пиратов
+      "https://upload.wikimedia.org/wikipedia/en/0/05/One_Piece,_Volume_61_Cover_(Japanese).jpg",
+      "https://upload.wikimedia.org/wikipedia/en/6/6f/One_Piece,_Volume_1_Cover_(Japanese).jpg",
+      "https://static.wikia.nocookie.net/onepiece/images/1/12/Luffy_vs_Kaido.png",
+      "https://static.wikia.nocookie.net/onepiece/images/9/9c/Straw_Hat_Pirates_Post_Timeskip.png",
+      "https://static.wikia.nocookie.net/onepiece/images/5/5a/Thousand_Sunny_Anime_Infobox.png"
     ];
     // Выбираем случайный фон
     const chosen = backgrounds[Math.floor(Math.random() * backgrounds.length)];
