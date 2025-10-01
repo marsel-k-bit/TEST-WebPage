@@ -11,7 +11,7 @@
       height: 100%;
       font-family: 'Treasure Map Deadhand', Arial, sans-serif;
       color: #fff;
-      background: url("https://i.ibb.co/YZqR7wx/onepiece-bg.jpg") no-repeat center center fixed;
+      background: no-repeat center center fixed;
       background-size: cover;
     }
     .overlay {
@@ -85,7 +85,6 @@
 <body>
   <div class="overlay"></div>
   <div class="login-container">
-    <!-- Логотип One Piece -->
     <img src="https://i.ibb.co/SKqQh2j/onepiece-logo.png" alt="One Piece Logo">
     <h1>OnePiece League</h1>
     <input type="text" placeholder="Имя пользователя" id="username">
@@ -97,13 +96,25 @@
   </div>
 
   <script>
+    // Набор фонов по One Piece
+    const backgrounds = [
+      "https://i.ibb.co/YZqR7wx/onepiece-bg.jpg", // Луффи на закате
+      "https://i.ibb.co/4JR1rXv/onepiece-crew.jpg", // Команда Мугивар
+      "https://i.ibb.co/xYnW0cJ/onepiece-ocean.jpg", // Море и корабль
+      "https://i.ibb.co/ZMJd9sh/onepiece-battle.jpg", // Битва
+      "https://i.ibb.co/MRtvN22/onepiece-map.jpg"    // Карта пиратов
+    ];
+    // Выбираем случайный фон
+    const chosen = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    document.body.style.backgroundImage = `url('${chosen}')`;
+
+    // Логика кнопки входа
     document.getElementById('login-btn').addEventListener('click', function(){
       const user = document.getElementById('username').value;
       const pwd = document.getElementById('password').value;
       if(!user || !pwd) {
         alert('Пожалуйста, заполните все поля');
       } else {
-        // Здесь будет логика входа
         alert('Добро пожаловать, ' + user + '!');
       }
     });
