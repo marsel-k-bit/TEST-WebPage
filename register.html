@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация — Pirate Adventure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: no-repeat center center fixed;
+      background-size: cover;
+      color: #111;
+    }
 
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    .register-container {
+      position: relative;
+      width: 380px;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(240, 240, 240, 0.9);
+      padding: 28px;
+      border-radius: 12px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.35);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .register-container h1 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .register-container input {
+      width: 90%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.12);
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .register-container button {
+      width: 95%;
+      padding: 12px;
+      margin-top: 12px;
+      background: #27ae60;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .register-container button:hover {
+      background: #1e8449;
+    }
+
+    .back-link {
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+    .back-link a {
+      color: #333;
+      text-decoration: none;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="register-container">
+    <h1>Регистрация</h1>
+    <input type="text" id="reg-username" placeholder="Имя пользователя">
+    <input type="email" id="reg-email" placeholder="Email">
+    <input type="password" id="reg-password" placeholder="Пароль">
+    <input type="password" id="reg-password2" placeholder="Повторите пароль">
+    <button id="register-btn">Зарегистрироваться</button>
+
+    <div class="back-link">
+      <a href="index.html">← Назад на вход</a>
+    </div>
+  </div>
+
+  <script>
+    document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
+
+    document.getElementById('register-btn').addEventListener('click', () => {
+      const user = document.getElementById('reg-username').value;
+      const email = document.getElementById('reg-email').value;
+      const pass = document.getElementById('reg-password').value;
+      const pass2 = document.getElementById('reg-password2').value;
+
+      if(!user || !email || !pass || !pass2){
+        alert('Пожалуйста, заполните все поля');
+        return;
+      }
+      if(pass !== pass2){
+        alert('Пароли не совпадают');
+        return;
+      }
+
+      alert(`Пользователь "${user}" успешно зарегистрирован! (Пока что без базы данных 😄)`);
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
