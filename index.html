@@ -119,18 +119,40 @@
     </div>
   </div>
 
-  <script>
-    // Фон из твоей папки images
-    document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-    // Логика кнопки входа
-    document.getElementById('login-btn').addEventListener('click', function(){
-      const user = document.getElementById('username').value;
-      const pwd = document.getElementById('password').value;
-      if(!user || !pwd) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAQT0gjAH1x4fphbcre8zbqRGWkBfI3Ifg",
+      authDomain: "pirate-adventure-ea50c.firebaseapp.com",
+      projectId: "pirate-adventure-ea50c",
+      storageBucket: "pirate-adventure-ea50c.firebasestorage.app",
+      messagingSenderId: "213673954071",
+      appId: "1:213673954071:web:baa480ffe77ec7eecfc552",
+      measurementId: "G-N6KTNFBRN4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginBtn = document.getElementById('login-btn');
+    loginBtn.addEventListener('click', async () => {
+      const email = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
         alert('Пожалуйста, заполните все поля');
-      } else {
-        alert('Добро пожаловать, ' + user + '!');
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert(`✅ Вход успешен!`);
+        // Здесь можно перенаправить на страницу игры
+        // window.location.href = 'game.html';
+      } catch(err) {
+        alert('❌ Ошибка входа: ' + err.message);
       }
     });
   </script>
