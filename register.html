@@ -101,10 +101,25 @@
     </div>
   </div>
 
-  <script>
-    document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-    document.getElementById('register-btn').addEventListener('click', () => {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAQT0gjAH1x4fphbcre8zbqRGWkBfI3Ifg",
+      authDomain: "pirate-adventure-ea50c.firebaseapp.com",
+      projectId: "pirate-adventure-ea50c",
+      storageBucket: "pirate-adventure-ea50c.firebasestorage.app",
+      messagingSenderId: "213673954071",
+      appId: "1:213673954071:web:baa480ffe77ec7eecfc552",
+      measurementId: "G-N6KTNFBRN4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const registerBtn = document.getElementById('register-btn');
+    registerBtn.addEventListener('click', async () => {
       const user = document.getElementById('reg-username').value;
       const email = document.getElementById('reg-email').value;
       const pass = document.getElementById('reg-password').value;
@@ -119,8 +134,13 @@
         return;
       }
 
-      alert(`Пользователь "${user}" успешно зарегистрирован! (Пока что без базы данных 😄)`);
-      window.location.href = "index.html";
+      try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        alert(`✅ Пользователь "${user}" успешно зарегистрирован!`);
+        window.location.href = "index.html";
+      } catch(err) {
+        alert('❌ Ошибка регистрации: ' + err.message);
+      }
     });
   </script>
 </body>
