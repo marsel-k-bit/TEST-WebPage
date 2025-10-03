@@ -14,82 +14,106 @@
       background: no-repeat center center fixed;
       background-size: cover;
     }
+
+    /* затемняющий слой (под формой) */
     .overlay {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
     }
+
+    /* сам контейнер формы */
     .login-container {
       position: relative;
-      width: 350px;
+      width: 360px;
       margin: auto;
       top: 50%;
       transform: translateY(-50%);
-      padding: 25px;
-      background: rgba(240, 240, 240, 0.6);
+      padding: 28px;
+      /* светлый полупрозрачный фон */
+      background: rgba(240, 240, 240, 0.85);
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    }
-    .login-container h1 {
+      box-shadow: 0 6px 30px rgba(0,0,0,0.35);
+      z-index: 2; /* чтобы находиться поверх overlay */
+      /* выравнивание содержимого по центру */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 2em;
-      letter-spacing: 1px;
+      color: #111; /* тёмный текст внутри контейнера */
     }
+
+    .login-container h1 {
+      margin: 6px 0 18px;
+      font-size: 1.9rem;
+      letter-spacing: 1px;
+      color: #111;
+    }
+
     .login-container img {
       display: block;
-      margin: 0 auto 15px;
-      width: 120px;
+      margin: 0 0 12px;
+      width: 110px;
+      height: auto;
     }
+
+    /* Поля - задаём фиксированную ширину (центруются благодаря align-items:center) */
     .login-container input[type="text"],
     .login-container input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 6px;
-      font-size: 1em;
+      width: 88%;
+      padding: 12px 14px;
+      margin: 8px 0;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #111;
+      background: rgba(255,255,255,0.95);
+      outline: none;
+      box-sizing: border-box;
     }
+
+    /* Если хотите, чтобы текст внутри полей был по центру, раскомментируйте следующую строчку: */
+    /* .login-container input { text-align: center; } */
+
     .login-container button {
-      width: 100%;
+      width: 90%;
       padding: 12px;
-      margin-top: 10px;
+      margin-top: 12px;
       background: #e67e22;
       border: none;
-      border-radius: 6px;
-      font-size: 1em;
+      border-radius: 8px;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s;
+      color: #fff;
+      transition: background 0.2s ease;
     }
-    .login-container button:hover {
-      background: #d35400;
-    }
+    .login-container button:hover { background: #d35400; }
+
     .links {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #333;
     }
-    .links a {
-      color: #bbb;
-      text-decoration: none;
-      margin: 0 10px;
-      font-size: 0.9em;
-    }
-    .links a:hover {
-      color: #fff;
-    }
+    .links a { color: #333; text-decoration: none; margin: 0 8px; }
+    .links a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
+
   <div class="login-container">
     <img src="images/png-clipart-jolly-roger-jolly-roger-skull-and-crossbones-removebg-preview.png" alt="Logo">
     <h1>Pirate Adventure</h1>
+
     <input type="text" placeholder="Имя пользователя" id="username">
     <input type="password" placeholder="Пароль" id="password">
     <button id="login-btn">Войти</button>
+
     <div class="links">
       <a href="#">Регистрация</a> | <a href="#">Забыли пароль?</a>
     </div>
