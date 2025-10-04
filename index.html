@@ -14,8 +14,6 @@
       background: no-repeat center center fixed;
       background-size: cover;
     }
-
-    /* затемняющий слой (под формой) */
     .overlay {
       position: fixed;
       top: 0;
@@ -25,8 +23,6 @@
       background: rgba(0,0,0,0.45);
       z-index: 1;
     }
-
-    /* сам контейнер формы */
     .login-container {
       position: relative;
       width: 360px;
@@ -34,34 +30,28 @@
       top: 50%;
       transform: translateY(-50%);
       padding: 28px;
-      /* светлый полупрозрачный фон */
       background: rgba(240, 240, 240, 0.85);
       border-radius: 12px;
       box-shadow: 0 6px 30px rgba(0,0,0,0.35);
-      z-index: 2; /* чтобы находиться поверх overlay */
-      /* выравнивание содержимого по центру */
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      color: #111; /* тёмный текст внутри контейнера */
+      color: #111;
     }
-
     .login-container h1 {
       margin: 6px 0 18px;
       font-size: 1.9rem;
       letter-spacing: 1px;
       color: #111;
     }
-
     .login-container img {
       display: block;
       margin: 0 0 12px;
       width: 110px;
       height: auto;
     }
-
-    /* Поля - задаём фиксированную ширину (центруются благодаря align-items:center) */
     .login-container input[type="text"],
     .login-container input[type="password"] {
       width: 88%;
@@ -75,10 +65,6 @@
       outline: none;
       box-sizing: border-box;
     }
-
-    /* Если хотите, чтобы текст внутри полей был по центру, раскомментируйте следующую строчку: */
-    /* .login-container input { text-align: center; } */
-
     .login-container button {
       width: 90%;
       padding: 12px;
@@ -92,7 +78,6 @@
       transition: background 0.2s ease;
     }
     .login-container button:hover { background: #d35400; }
-
     .links {
       text-align: center;
       margin-top: 12px;
@@ -110,7 +95,7 @@
     <img src="images/png-clipart-jolly-roger-jolly-roger-skull-and-crossbones-removebg-preview.png" alt="Logo">
     <h1>Pirate Adventure</h1>
 
-    <input type="text" placeholder="Имя пользователя" id="username">
+    <input type="text" placeholder="Имя пользователя или Email" id="username">
     <input type="password" placeholder="Пароль" id="password">
     <button id="login-btn">Войти</button>
 
@@ -120,11 +105,11 @@
   </div>
 
   <script type="module">
-
     document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
-    
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAQT0gjAH1x4fphbcre8zbqRGWkBfI3Ifg",
@@ -138,21 +123,30 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
     const loginBtn = document.getElementById('login-btn');
     loginBtn.addEventListener('click', async () => {
-      const email = document.getElementById('username').value;
+      let loginValue = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value;
 
-      if (!email || !password) {
+      if (!loginValue || !password) {
         alert('Пожалуйста, заполните все поля');
         return;
       }
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert(`✅ Вход успешен!`);
-        // Здесь можно перенаправить на страницу игры
+        let emailToUse = loginValue;
+
+        // Если введён ник, ищем email в Firestore
+        const q = query(collection(db, "users"), where("username", "==", loginValue));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          emailToUse = querySnapshot.docs[0].data().email;
+        }
+
+        await signInWithEmailAndPassword(auth, emailToUse, password);
+        alert('✅ Вход успешен!');
         // window.location.href = 'game.html';
       } catch(err) {
         alert('❌ Ошибка входа: ' + err.message);
