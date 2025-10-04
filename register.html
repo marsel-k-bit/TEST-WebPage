@@ -104,7 +104,8 @@
   <script type="module">
 
     document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
-    
+
+    import { getFirestore, doc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
@@ -121,30 +122,50 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    const db = getFirestore(app);
+
     const registerBtn = document.getElementById('register-btn');
-    registerBtn.addEventListener('click', async () => {
-      const user = document.getElementById('reg-username').value;
-      const email = document.getElementById('reg-email').value;
-      const pass = document.getElementById('reg-password').value;
-      const pass2 = document.getElementById('reg-password2').value;
+registerBtn.addEventListener('click', async () => {
+  const user = document.getElementById('reg-username').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-password').value;
+  const pass2 = document.getElementById('reg-password2').value;
 
-      if(!user || !email || !pass || !pass2){
-        alert('Пожалуйста, заполните все поля');
-        return;
-      }
-      if(pass !== pass2){
-        alert('Пароли не совпадают');
-        return;
-      }
+  if (!user || !email || !pass || !pass2) {
+    alert('Пожалуйста, заполните все поля');
+    return;
+  }
+  if (pass !== pass2) {
+    alert('Пароли не совпадают');
+    return;
+  }
 
-      try {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        alert(`✅ Пользователь "${user}" успешно зарегистрирован!`);
-        window.location.href = "index.html";
-      } catch(err) {
-        alert('❌ Ошибка регистрации: ' + err.message);
-      }
+  try {
+    // Проверка существующего ника
+    const q = query(collection(db, "users"), where("username", "==", user));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      alert('❌ Этот ник уже занят, выберите другой');
+      return;
+    }
+
+    // Создаем пользователя в Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    const uid = userCredential.user.uid;
+
+    // Сохраняем ник и email в Firestore
+    await setDoc(doc(db, "users", uid), {
+      username: user,
+      email: email
     });
+
+    alert(`✅ Пользователь "${user}" успешно зарегистрирован!`);
+    window.location.href = "index.html";
+  } catch (err) {
+    alert('❌ Ошибка регистрации: ' + err.message);
+  }
+});
   </script>
 </body>
 </html>
