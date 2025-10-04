@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>PirateAdventure - Локации</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #fff;
+    display: flex;
+    height: 100vh;
+  }
 
+  /* Левая панель с локациями */
+  #locations-panel {
+    width: 200px;
+    background-color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #locations-panel button {
+    margin: 10px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #e67e22;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  #locations-panel button:hover {
+    background-color: #d35400;
+  }
+
+  /* Центральная зона с картинкой и описанием */
+  #location-display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #111;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  #location-display img {
+    max-width: 80%;
+    height: auto;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  #location-description {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<div id="locations-panel">
+  <button data-location="1">Локация 1</button>
+  <button data-location="2">Локация 2</button>
+  <button data-location="3">Локация 3</button>
+</div>
+
+<div id="location-display">
+  <img id="location-image" src="images/location1.jpg" alt="Локация">
+  <div id="location-description">Вы находитесь в Локации 1. Здесь всё тихо и спокойно.</div>
+</div>
+
+<script>
+  const locations = {
+    1: {
+      image: 'images/location1.jpg',
+      description: 'Вы находитесь в Локации 1. Здесь всё тихо и спокойно.'
+    },
+    2: {
+      image: 'images/location2.jpg',
+      description: 'Локация 2 — шумная дорога с множеством прохожих.'
+    },
+    3: {
+      image: 'images/location3.jpg',
+      description: 'Локация 3 — больница, где можно восстановить здоровье.'
+    }
+  };
+
+  const buttons = document.querySelectorAll('#locations-panel button');
+  const locationImage = document.getElementById('location-image');
+  const locationDescription = document.getElementById('location-description');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const loc = btn.dataset.location;
+      locationImage.src = locations[loc].image;
+      locationDescription.textContent = locations[loc].description;
+    });
+  });
+</script>
+
+</body>
+</html>
