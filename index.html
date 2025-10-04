@@ -100,58 +100,89 @@
     <button id="login-btn">Войти</button>
 
     <div class="links">
-      <a href="register.html">Регистрация</a> | <a href="#">Забыли пароль?</a>
+      <a href="register.html">Регистрация</a> | <a href="#" id="forgot-password">Забыли пароль?</a>
     </div>
   </div>
 
   <script type="module">
-    document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
+  document.body.style.backgroundImage = "url('images/Lucid_Origin_Beautiful_anime_ocean_scene_pirate_ship_sailing_u_0.jpg')";
+  
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyAQT0gjAH1x4fphbcre8zbqRGWkBfI3Ifg",
+    authDomain: "pirate-adventure-ea50c.firebaseapp.com",
+    projectId: "pirate-adventure-ea50c",
+    storageBucket: "pirate-adventure-ea50c.firebasestorage.app",
+    messagingSenderId: "213673954071",
+    appId: "1:213673954071:web:baa480ffe77ec7eecfc552",
+    measurementId: "G-N6KTNFBRN4"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  
+  const forgotPasswordLink = document.getElementById('forgot-password');
+  const loginBtn = document.getElementById('login-btn');
+  
+  // Сброс пароля
+  forgotPasswordLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+  
+    const loginValue = prompt('Введите ваш Email или Ник:')?.trim();
+    if (!loginValue) {
+      alert('⚠ Пожалуйста, введите Email или Ник');
+      return;
+    }
+  
+    let emailToUse = loginValue;
+  
+    try {
+      // Если введён ник, ищем email в Firestore
+      const q = query(collection(db, "users"), where("username", "==", loginValue));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        emailToUse = querySnapshot.docs[0].data().email;
+      }
+  
+      await sendPasswordResetEmail(auth, emailToUse);
+      alert(`✅ Ссылка для сброса пароля отправлена на ${emailToUse}`);
+    } catch (err) {
+      alert('❌ Ошибка отправки ссылки: ' + err.message);
+    }
+  });
+  
+  // Вход с Email или Ник
+  loginBtn.addEventListener('click', async () => {
+    const loginValue = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+  
+    if (!loginValue || !password) {
+      alert('⚠ Пожалуйста, заполните все поля');
+      return;
+    }
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    try {
+      let emailToUse = loginValue;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAQT0gjAH1x4fphbcre8zbqRGWkBfI3Ifg",
-      authDomain: "pirate-adventure-ea50c.firebaseapp.com",
-      projectId: "pirate-adventure-ea50c",
-      storageBucket: "pirate-adventure-ea50c.firebasestorage.app",
-      messagingSenderId: "213673954071",
-      appId: "1:213673954071:web:baa480ffe77ec7eecfc552",
-      measurementId: "G-N6KTNFBRN4"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const loginBtn = document.getElementById('login-btn');
-    loginBtn.addEventListener('click', async () => {
-      let loginValue = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value;
-
-      if (!loginValue || !password) {
-        alert('Пожалуйста, заполните все поля');
-        return;
+      // Если введён ник, ищем email в Firestore
+      const q = query(collection(db, "users"), where("username", "==", loginValue));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        emailToUse = querySnapshot.docs[0].data().email;
       }
 
-      try {
-        let emailToUse = loginValue;
-
-        // Если введён ник, ищем email в Firestore
-        const q = query(collection(db, "users"), where("username", "==", loginValue));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-          emailToUse = querySnapshot.docs[0].data().email;
-        }
-
-        await signInWithEmailAndPassword(auth, emailToUse, password);
-        alert('✅ Вход успешен!');
-        // window.location.href = 'game.html';
-      } catch(err) {
-        alert('❌ Ошибка входа: ' + err.message);
-      }
-    });
+      await signInWithEmailAndPassword(auth, emailToUse, password);
+      alert('✅ Вход успешен!');
+      // Здесь можно перенаправить на страницу игры
+      window.location.href = 'game.html';
+    } catch (err) {
+      alert('❌ Ошибка входа: ' + err.message);
+    }
+  });
   </script>
 </body>
 </html>
