@@ -18,13 +18,14 @@
   /* Верхнее горизонтальное меню */
   #top-menu {
     display: flex;
+    justify-content: center; /* центрируем по горизонтали */
     background: rgba(30,30,30,0.9);
     padding: 10px 20px;
     border-bottom: 2px solid #e67e22;
   }
 
   #top-menu button {
-    margin-right: 12px;
+    margin: 0 8px; /* расстояние между кнопками */
     padding: 10px 15px;
     border: 2px solid #e67e22;
     border-radius: 8px;
@@ -38,14 +39,13 @@
   #top-menu button:hover {
     background-color: #e67e22;
     transform: scale(1.05);
-    box-shadow: 0 0 10px #e67e22;
+    box-shadow: 0 0 15px #e67e22;
   }
 
-  /* Основная игровая зона */
-  #game-container {
+  /* Основная часть с левой панелью и центральной зоной */
+  #main-content {
     display: flex;
     flex: 1;
-    overflow: hidden;
   }
 
   /* Левая панель с локациями */
@@ -112,26 +112,25 @@
 </head>
 <body>
 
-<!-- Верхнее меню как в League17 -->
+<!-- Верхнее меню -->
 <div id="top-menu">
-  <button data-tab="status">Статус</button>
-  <button data-tab="team">Команда</button>
-  <button data-tab="inventory">Инвентарь</button>
-  <button data-tab="messages">Сообщения</button>
-  <button data-tab="rewards">Награды</button>
-  <button data-tab="missions">Команды</button>
-  <button data-tab="log">Журнал</button>
+  <button>Статус</button>
+  <button>Команда</button>
+  <button>Инвентарь</button>
+  <button>Сообщения</button>
+  <button>Награды</button>
+  <button>Команды</button>
+  <button>Журнал</button>
 </div>
 
-<div id="game-container">
-  <!-- Левая панель с локациями -->
+<!-- Основная часть -->
+<div id="main-content">
   <div id="locations-panel">
     <button data-location="1">Локация 1</button>
     <button data-location="2">Локация 2</button>
     <button data-location="3">Локация 3</button>
   </div>
 
-  <!-- Центральная зона -->
   <div id="location-display">
     <img id="location-image" src="images/location1.jpg" alt="Локация">
     <div id="location-description">Вы находитесь в Локации 1. Здесь всё тихо и спокойно.</div>
@@ -139,31 +138,21 @@
 </div>
 
 <script>
-  // Данные локаций
   const locations = {
     1: { image: 'images/location1.jpg', description: 'Вы находитесь в Локации 1. Здесь всё тихо и спокойно.' },
     2: { image: 'images/location2.jpg', description: 'Локация 2 — шумная дорога с множеством прохожих.' },
     3: { image: 'images/location3.jpg', description: 'Локация 3 — больница, где можно восстановить здоровье.' }
   };
 
-  const locButtons = document.querySelectorAll('#locations-panel button');
+  const buttons = document.querySelectorAll('#locations-panel button');
   const locationImage = document.getElementById('location-image');
   const locationDescription = document.getElementById('location-description');
 
-  locButtons.forEach(btn => {
+  buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const loc = btn.dataset.location;
       locationImage.src = locations[loc].image;
       locationDescription.textContent = locations[loc].description;
-    });
-  });
-
-  // Верхнее меню игрока
-  const topButtons = document.querySelectorAll('#top-menu button');
-  topButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.tab;
-      locationDescription.textContent = `Открыта вкладка: ${tab.toUpperCase()}`;
     });
   });
 </script>
